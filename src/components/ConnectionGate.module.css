@@ -1,0 +1,53 @@
+.setup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 24px;
+    background: var(--colors-grey200);
+}
+
+.setupCard {
+    max-width: 520px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow:
+        0 0 1px rgba(33, 41, 52, 0.1),
+        0 1px 4px rgba(33, 41, 52, 0.15);
+    padding: 32px;
+    text-align: center;
+}
+
+.setupIcon {
+    display: flex;
+    justify-content: center;
+    color: var(--colors-orange500);
+    margin-bottom: 8px;
+}
+
+.setupTitle {
+    margin: 0 0 12px 0;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--colors-grey900);
+}
+
+.setupBody {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--colors-grey800);
+    text-align: start;
+    margin-bottom: 20px;
+}
+
+.setupBody p {
+    margin: 0 0 12px 0;
+}
+
+.setupBody code {
+    font-family: 'SF Mono', 'Roboto Mono', Menlo, Consolas, monospace;
+    font-size: 13px;
+    background: var(--colors-grey100);
+    padding: 1px 5px;
+    border-radius: 3px;
+}

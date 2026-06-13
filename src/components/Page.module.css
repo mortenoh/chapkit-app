@@ -1,0 +1,48 @@
+.page {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+}
+
+.header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--colors-grey300);
+    flex-shrink: 0;
+}
+
+.headingText {
+    min-width: 0;
+}
+
+.title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--colors-grey900);
+}
+
+.subtitle {
+    margin: 4px 0 0 0;
+    font-size: 13px;
+    color: var(--colors-grey600);
+    overflow-wrap: break-word;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+.body {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    padding: 20px;
+}

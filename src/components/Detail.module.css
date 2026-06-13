@@ -1,0 +1,44 @@
+.panel {
+    background: #fff;
+    border: 1px solid var(--colors-grey300);
+    border-radius: 6px;
+    padding: 16px;
+}
+
+.panelTitle {
+    margin: 0 0 12px 0;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--colors-grey700);
+}
+
+.row {
+    display: grid;
+    grid-template-columns: 150px 1fr;
+    gap: 12px;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--colors-grey200);
+}
+
+.row:last-child {
+    border-bottom: none;
+}
+
+.rowLabel {
+    font-size: 13px;
+    color: var(--colors-grey600);
+}
+
+.rowValue {
+    font-size: 14px;
+    color: var(--colors-grey900);
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.rowValue a {
+    color: var(--colors-blue700);
+    text-decoration: underline;
+}

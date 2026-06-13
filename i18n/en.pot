@@ -1,0 +1,333 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: i18next-conv\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+"POT-Creation-Date: 2026-06-13T19:31:48.649Z\n"
+"PO-Revision-Date: 2026-06-13T19:31:48.649Z\n"
+
+msgid "CHAP"
+msgstr "CHAP"
+
+msgid "Services"
+msgstr "Services"
+
+msgid "Model service"
+msgstr "Model service"
+
+msgid "Overview"
+msgstr "Overview"
+
+msgid "Artifacts"
+msgstr "Artifacts"
+
+msgid "Jobs"
+msgstr "Jobs"
+
+msgid "Configurations"
+msgstr "Configurations"
+
+msgid "System"
+msgstr "System"
+
+msgid "Retry connection"
+msgstr "Retry connection"
+
+msgid "Checking the CHAP connection…"
+msgstr "Checking the CHAP connection…"
+
+msgid "Could not query DHIS2 routes"
+msgstr "Could not query DHIS2 routes"
+
+msgid "No CHAP route configured"
+msgstr "No CHAP route configured"
+
+msgid ""
+"This app reaches the CHAP modeling platform through a DHIS2 route with code "
+"\"{{code}}\", but no such route exists on this instance."
+msgstr ""
+"This app reaches the CHAP modeling platform through a DHIS2 route with code "
+"\"{{code}}\", but no such route exists on this instance."
+
+msgid "The CHAP route is disabled"
+msgstr "The CHAP route is disabled"
+
+msgid ""
+"A route with code \"{{code}}\" exists but is disabled. Enable it in DHIS2 "
+"and retry."
+msgstr ""
+"A route with code \"{{code}}\" exists but is disabled. Enable it in DHIS2 "
+"and retry."
+
+msgid "Connecting to chap-core…"
+msgstr "Connecting to chap-core…"
+
+msgid "chap-core did not respond"
+msgstr "chap-core did not respond"
+
+msgid ""
+"The \"{{code}}\" route exists, but chap-core did not answer through it. "
+"Check that chap-core is running and reachable from DHIS2."
+msgstr ""
+"The \"{{code}}\" route exists, but chap-core did not answer through it. "
+"Check that chap-core is running and reachable from DHIS2."
+
+msgid "Details"
+msgstr "Details"
+
+msgid "Edit"
+msgstr "Edit"
+
+msgid "API URL link"
+msgstr "API URL link"
+
+msgid "Copy"
+msgstr "Copy"
+
+msgid "Search menu items"
+msgstr "Search menu items"
+
+msgid "No menu items found for \"{{term}}\""
+msgstr "No menu items found for \"{{term}}\""
+
+msgid "Expand menu"
+msgstr "Expand menu"
+
+msgid "Collapse menu"
+msgstr "Collapse menu"
+
+msgid "Something went wrong"
+msgstr "Something went wrong"
+
+msgid "Retry"
+msgstr "Retry"
+
+msgid "Training workspace"
+msgstr "Training workspace"
+
+msgid "Prediction"
+msgstr "Prediction"
+
+msgid "Artifact"
+msgstr "Artifact"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Level"
+msgstr "Level"
+
+msgid "Hierarchy"
+msgstr "Hierarchy"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Config"
+msgstr "Config"
+
+msgid "Created"
+msgstr "Created"
+
+msgid "Started"
+msgstr "Started"
+
+msgid "Completed"
+msgstr "Completed"
+
+msgid "Duration"
+msgstr "Duration"
+
+msgid "Exit code"
+msgstr "Exit code"
+
+msgid "Content"
+msgstr "Content"
+
+msgid "unknown"
+msgstr "unknown"
+
+msgid "Tags"
+msgstr "Tags"
+
+msgid "Download"
+msgstr "Download"
+
+msgid "Download artifact ({{size}})"
+msgstr "Download artifact ({{size}})"
+
+msgid "Standard output"
+msgstr "Standard output"
+
+msgid "Standard error"
+msgstr "Standard error"
+
+msgid "Refresh"
+msgstr "Refresh"
+
+msgid "No artifacts yet. Run a training or prediction on this service."
+msgstr "No artifacts yet. Run a training or prediction on this service."
+
+msgid "Select an artifact to inspect it."
+msgstr "Select an artifact to inspect it."
+
+msgid "Yes"
+msgstr "Yes"
+
+msgid "No"
+msgstr "No"
+
+msgid "Configuration"
+msgstr "Configuration"
+
+msgid "Updated"
+msgstr "Updated"
+
+msgid "Parameters"
+msgstr "Parameters"
+
+msgid "No configurations stored on this service."
+msgstr "No configurations stored on this service."
+
+msgid "Select a configuration."
+msgstr "Select a configuration."
+
+msgid " · auto-refreshing"
+msgstr " · auto-refreshing"
+
+msgid "No jobs have been submitted yet."
+msgstr "No jobs have been submitted yet."
+
+msgid "Submitted"
+msgstr "Submitted"
+
+msgid "Finished"
+msgstr "Finished"
+
+msgid "Job"
+msgstr "Job"
+
+msgid "Error"
+msgstr "Error"
+
+msgid "Service not found"
+msgstr "Service not found"
+
+msgid "No registered service has id \"{{id}}\". It may have expired."
+msgstr "No registered service has id \"{{id}}\". It may have expired."
+
+msgid "Back to services"
+msgstr "Back to services"
+
+msgid "Model"
+msgstr "Model"
+
+msgid "Version"
+msgstr "Version"
+
+msgid "Description"
+msgstr "Description"
+
+msgid "Assessed status"
+msgstr "Assessed status"
+
+msgid "Author"
+msgstr "Author"
+
+msgid "Organization"
+msgstr "Organization"
+
+msgid "Contact"
+msgstr "Contact"
+
+msgid "Citation"
+msgstr "Citation"
+
+msgid "Repository"
+msgstr "Repository"
+
+msgid "Documentation"
+msgstr "Documentation"
+
+msgid "Modeling"
+msgstr "Modeling"
+
+msgid "Period type"
+msgstr "Period type"
+
+msgid "Prediction periods"
+msgstr "Prediction periods"
+
+msgid "Required covariates"
+msgstr "Required covariates"
+
+msgid "none"
+msgstr "none"
+
+msgid "Extra covariates allowed"
+msgstr "Extra covariates allowed"
+
+msgid "Requires geometry"
+msgstr "Requires geometry"
+
+msgid "Runtime"
+msgstr "Runtime"
+
+msgid "Registered"
+msgstr "Registered"
+
+msgid "Last ping"
+msgstr "Last ping"
+
+msgid "Expires"
+msgstr "Expires"
+
+msgid "Python"
+msgstr "Python"
+
+msgid "Platform"
+msgstr "Platform"
+
+msgid "Hostname"
+msgstr "Hostname"
+
+msgid "Service time"
+msgstr "Service time"
+
+msgid "v{{version}}"
+msgstr "v{{version}}"
+
+msgid "Last ping {{when}}"
+msgstr "Last ping {{when}}"
+
+msgid "Registered {{when}}"
+msgstr "Registered {{when}}"
+
+msgid "Explore"
+msgstr "Explore"
+
+msgid "CHAP model services"
+msgstr "CHAP model services"
+
+msgid "No model services are currently registered with chap-core."
+msgstr "No model services are currently registered with chap-core."
+
+msgid "Runtime, health and bundled apps"
+msgstr "Runtime, health and bundled apps"
+
+msgid "Timezone"
+msgstr "Timezone"
+
+msgid "Unavailable"
+msgstr "Unavailable"
+
+msgid "Health"
+msgstr "Health"
+
+msgid "Bundled apps"
+msgstr "Bundled apps"
+
+msgid "No bundled apps"
+msgstr "No bundled apps"

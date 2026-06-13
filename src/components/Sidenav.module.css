@@ -1,0 +1,142 @@
+/* Adapted from dhis2/metadata-management-app sidenav (design-specs) */
+
+.sidenav {
+    width: 100%;
+    height: 100%;
+    background: var(--sidenav-dark-bg);
+    color: var(--colors-grey300);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.scrollArea {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-color: var(--colors-grey700) var(--sidenav-dark-bg);
+    scrollbar-width: thin;
+}
+
+.collapseButton {
+    flex-shrink: 0;
+    align-self: flex-end;
+    width: 32px;
+    height: 32px;
+    margin: 8px;
+    margin-top: auto;
+    border: none;
+    border-radius: 3px;
+    background: var(--sidenav-dark-bg-hover);
+    color: var(--colors-grey300);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.collapseButton:hover {
+    background: var(--colors-grey800);
+}
+
+.collapseIconFlipped {
+    display: flex;
+    transform: rotate(180deg);
+}
+
+.filter {
+    padding: 8px;
+}
+
+.filter input {
+    background: var(--sidenav-dark-bg);
+    border: 1px solid var(--colors-grey900);
+    color: var(--colors-grey050);
+}
+
+.filter input::placeholder {
+    color: var(--colors-grey500);
+}
+
+.filter input:focus {
+    background: var(--sidenav-dark-bg);
+    border-color: var(--colors-grey700);
+    box-shadow: var(--colors-grey500) 0px 0px 0px 2px inset;
+}
+
+.items {
+    overflow-y: auto;
+    scrollbar-color: var(--colors-grey700) var(--sidenav-dark-bg);
+    scrollbar-width: thin;
+}
+
+.parentButton {
+    border: none;
+    background: var(--sidenav-dark-bg);
+    color: var(--colors-grey300);
+    font-size: 14px;
+    font-family: inherit;
+    text-align: start;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: 32px;
+    padding: 8px 8px 8px 12px;
+    cursor: pointer;
+}
+
+.parentButton:hover {
+    background: var(--sidenav-dark-bg-hover);
+    text-decoration: underline;
+}
+
+.chevron,
+.chevronOpen {
+    margin-inline-start: auto;
+    width: 16px;
+    height: 16px;
+    transition: transform 0.1s linear;
+}
+
+.chevronOpen {
+    transform: rotate(180deg);
+}
+
+.linkList {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.link a {
+    display: flex;
+    align-items: center;
+    min-height: 32px;
+    padding: 8px 8px 8px 32px;
+    background: var(--sidenav-dark-bg);
+    text-decoration: none;
+    color: var(--colors-grey300);
+    font-size: 14px;
+}
+
+.link a:hover {
+    background: var(--sidenav-dark-bg-hover);
+    text-decoration: underline;
+}
+
+.link a.active {
+    font-weight: 700;
+    text-decoration: underline;
+    color: var(--colors-grey300);
+    background: var(--sidenav-dark-bg-selected);
+    box-shadow: inset 6px 0px 0px 0px var(--colors-teal400);
+}
+
+.noMatch {
+    font-size: 13px;
+    line-height: 17px;
+    color: var(--colors-grey500);
+    text-align: center;
+    padding: 16px 8px;
+    word-break: break-word;
+}

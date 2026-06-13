@@ -1,0 +1,30 @@
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 48px 16px;
+    height: 100%;
+}
+
+.note {
+    font-size: 13px;
+    color: var(--colors-grey600);
+    margin: 0;
+}
+
+.padded {
+    padding: 16px;
+}
+
+.retry {
+    margin-top: 12px;
+}
+
+.empty {
+    padding: 32px 16px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--colors-grey600);
+}
