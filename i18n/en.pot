@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-06-13T19:31:48.649Z\n"
-"PO-Revision-Date: 2026-06-13T19:31:48.649Z\n"
+"POT-Creation-Date: 2026-06-13T19:55:00.837Z\n"
+"PO-Revision-Date: 2026-06-13T19:55:00.837Z\n"
 
 msgid "CHAP"
 msgstr "CHAP"
@@ -313,6 +313,9 @@ msgstr "CHAP model services"
 
 msgid "No model services are currently registered with chap-core."
 msgstr "No model services are currently registered with chap-core."
+
+msgid "Overall"
+msgstr "Overall"
 
 msgid "Runtime, health and bundled apps"
 msgstr "Runtime, health and bundled apps"

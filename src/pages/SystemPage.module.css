@@ -5,6 +5,18 @@
     align-items: start;
 }
 
+.check {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.checkExtra {
+    font-size: 12px;
+    color: var(--colors-grey600);
+}
+
 .app {
     padding: 10px 0;
     border-bottom: 1px solid var(--colors-grey200);

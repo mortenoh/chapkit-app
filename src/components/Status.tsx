@@ -28,16 +28,23 @@ export const AssessedStatusBadge: FC<{ status?: AssessedStatus | null }> = ({
 }
 
 // success / completed -> green, running -> blue, failed / error -> red
+const GREEN_STATES = new Set(['success', 'completed', 'healthy', 'ok', 'up'])
+const BLUE_STATES = new Set(['running', 'pending', 'started'])
+const RED_STATES = new Set(['failed', 'failure', 'error', 'unhealthy', 'down'])
+
 function runStateColor(status: string): string {
     const normalized = status.toLowerCase()
-    if (normalized === 'success' || normalized === 'completed') {
+    if (GREEN_STATES.has(normalized)) {
         return '#1f9d57'
     }
-    if (normalized === 'running' || normalized === 'pending') {
+    if (BLUE_STATES.has(normalized)) {
         return '#1565c0'
     }
-    if (normalized === 'failed' || normalized === 'error') {
+    if (RED_STATES.has(normalized)) {
         return '#c4183c'
+    }
+    if (normalized === 'degraded' || normalized === 'warning') {
+        return '#e8590c'
     }
     return '#6e7a8a'
 }

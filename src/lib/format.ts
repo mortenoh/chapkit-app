@@ -11,12 +11,22 @@ const UNITS: [Intl.RelativeTimeFormatUnit, number][] = [
 
 const rtf = new Intl.RelativeTimeFormat(undefined, { numeric: 'auto' })
 
+// chapkit emits some timestamps with a timezone ("...Z", jobs) and some
+// without one (naive UTC, e.g. config/artifact created_at). A tz-less string is
+// parsed by Date as LOCAL time, which skews relative times by the viewer's
+// offset — so treat a tz-less datetime as UTC by appending "Z".
+function toDate(iso: string): Date {
+    const hasTz = /([zZ]|[+-]\d{2}:?\d{2})$/.test(iso)
+    const looksDateTime = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(iso)
+    return new Date(!hasTz && looksDateTime ? `${iso}Z` : iso)
+}
+
 /** Human "3 minutes ago" style label for an ISO timestamp. */
 export function relativeTime(iso: string | null | undefined): string {
     if (!iso) {
         return '—'
     }
-    const then = new Date(iso).getTime()
+    const then = toDate(iso).getTime()
     if (Number.isNaN(then)) {
         return String(iso)
     }
@@ -35,7 +45,7 @@ export function formatDateTime(iso: string | null | undefined): string {
     if (!iso) {
         return '—'
     }
-    const date = new Date(iso)
+    const date = toDate(iso)
     return Number.isNaN(date.getTime()) ? String(iso) : date.toLocaleString()
 }
 

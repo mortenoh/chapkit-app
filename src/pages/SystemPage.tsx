@@ -7,8 +7,51 @@ import { JsonBlock } from '@/components/CodeBlock'
 import { DetailPanel, DetailRow } from '@/components/Detail'
 import { Page, PageBody, PageHeader } from '@/components/Page'
 import { Empty, Loading } from '@/components/StateViews'
-import { servicePath, SystemApp, SystemInfo, useChapQuery } from '@/lib/chap'
+import { RunStatusBadge } from '@/components/Status'
+import {
+    HealthStatus,
+    servicePath,
+    SystemApp,
+    SystemInfo,
+    useChapQuery,
+} from '@/lib/chap'
 import { formatDateTime } from '@/lib/format'
+
+/** Render chapkit's /health payload as a status + per-check panel. */
+const HealthView: FC<{ data: HealthStatus }> = ({ data }) => {
+    const checks = data.checks ?? {}
+    const checkNames = Object.keys(checks)
+    if (!data.status && checkNames.length === 0) {
+        return <JsonBlock value={data} />
+    }
+    return (
+        <>
+            {data.status && (
+                <DetailRow label={i18n.t('Overall')}>
+                    <RunStatusBadge status={data.status} />
+                </DetailRow>
+            )}
+            {checkNames.map((name) => {
+                const check = checks[name]
+                const extras = Object.entries(check).filter(
+                    ([key]) => key !== 'state'
+                )
+                return (
+                    <DetailRow key={name} label={name}>
+                        <span className={classes.check}>
+                            <RunStatusBadge status={check.state} />
+                            {extras.map(([key, value]) => (
+                                <span key={key} className={classes.checkExtra}>
+                                    {key}: {String(value)}
+                                </span>
+                            ))}
+                        </span>
+                    </DetailRow>
+                )
+            })}
+        </>
+    )
+}
 
 const SystemPage: FC = () => {
     const { id = '' } = useParams()
@@ -16,7 +59,7 @@ const SystemPage: FC = () => {
     const apps = useChapQuery<SystemApp[]>(
         servicePath(id, 'api/v1/system/apps')
     )
-    const health = useChapQuery<unknown>(servicePath(id, 'health'))
+    const health = useChapQuery<HealthStatus>(servicePath(id, 'health'))
 
     return (
         <Page>
@@ -68,8 +111,8 @@ const SystemPage: FC = () => {
                     <DetailPanel title={i18n.t('Health')}>
                         {health.loading && !health.data ? (
                             <Loading />
-                        ) : health.data !== undefined ? (
-                            <JsonBlock value={health.data} />
+                        ) : health.data ? (
+                            <HealthView data={health.data} />
                         ) : (
                             <Empty>{i18n.t('Unavailable')}</Empty>
                         )}

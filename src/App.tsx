@@ -21,7 +21,10 @@ function activeServiceId(
     return match ? decodeURIComponent(match[1]) : fallback
 }
 
-function buildSections(serviceId: string | undefined): NavSection[] {
+function buildSections(
+    serviceId: string | undefined,
+    serviceName: string | undefined
+): NavSection[] {
     const sections: NavSection[] = [
         {
             label: i18n.t('CHAP'),
@@ -33,7 +36,7 @@ function buildSections(serviceId: string | undefined): NavSection[] {
     if (serviceId) {
         const base = `/services/${encodeURIComponent(serviceId)}`
         sections.push({
-            label: i18n.t('Model service'),
+            label: serviceName || i18n.t('Model service'),
             children: [
                 { path: base, label: i18n.t('Overview'), end: true },
                 { path: `${base}/artifacts`, label: i18n.t('Artifacts') },
@@ -73,7 +76,8 @@ const AppShell: FC = () => {
     const [navCollapsed, setNavCollapsed] = useState(false)
 
     const serviceId = activeServiceId(pathname, services[0]?.id)
-    const sections = buildSections(serviceId)
+    const activeService = services.find((s) => s.id === serviceId)
+    const sections = buildSections(serviceId, activeService?.info.display_name)
 
     return (
         <div

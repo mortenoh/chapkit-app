@@ -128,6 +128,17 @@ export interface SystemInfo {
     hostname: string
 }
 
+export interface HealthCheck {
+    state?: string
+    [key: string]: unknown
+}
+
+export interface HealthStatus {
+    status?: string
+    checks?: Record<string, HealthCheck>
+    [key: string]: unknown
+}
+
 export interface SystemApp {
     name: string
     version: string
