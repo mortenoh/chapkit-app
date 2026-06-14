@@ -54,3 +54,4 @@ jobs:
               uses: softprops/action-gh-release@v2
               with:
                   files: build/bundle/*.zip
+                  generate_release_notes: true
