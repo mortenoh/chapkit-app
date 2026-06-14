@@ -1,12 +1,20 @@
 import { useConfig } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
-import { Tag } from '@dhis2/ui'
-import React, { FC } from 'react'
+import { Button, Tag } from '@dhis2/ui'
+import React, { FC, useState } from 'react'
 import classes from './ArtifactDetail.module.css'
-import CodeBlock from '@/components/CodeBlock'
+import CodeBlock, { JsonBlock } from '@/components/CodeBlock'
+import DataFramePreview from '@/components/DataFramePreview'
 import { DetailPanel, DetailRow } from '@/components/Detail'
 import { RunStatusBadge } from '@/components/Status'
-import { Artifact, servicePath } from '@/lib/chap'
+import {
+    Artifact,
+    DataFrameContent,
+    isBinaryContent,
+    isDataFrameContent,
+    servicePath,
+} from '@/lib/chap'
+import { downloadFile } from '@/lib/download'
 import {
     formatBytes,
     formatDateTime,
@@ -25,17 +33,72 @@ export function typeLabel(type?: string): string {
     return type ?? i18n.t('Artifact')
 }
 
-/** Full detail view for one artifact: metadata, logs, and a download link. */
+function fileExtension(contentType?: string | null): string {
+    if (!contentType) {
+        return 'bin'
+    }
+    if (contentType.includes('json')) {
+        return 'json'
+    }
+    if (contentType.includes('zip')) {
+        return 'zip'
+    }
+    if (contentType.includes('csv')) {
+        return 'csv'
+    }
+    if (contentType.includes('text')) {
+        return 'txt'
+    }
+    return 'bin'
+}
+
+const ContentPreview: FC<{ content: unknown }> = ({ content }) => {
+    if (isDataFrameContent(content)) {
+        return <DataFramePreview content={content as DataFrameContent} />
+    }
+    if (typeof content === 'string') {
+        return <CodeBlock>{content}</CodeBlock>
+    }
+    return <JsonBlock value={content} />
+}
+
+/** Full detail view for one artifact: metadata, data preview, logs, download. */
 const ArtifactDetail: FC<{ serviceId: string; artifact: Artifact }> = ({
     serviceId,
     artifact,
 }) => {
     const { baseUrl } = useConfig()
+    const [downloading, setDownloading] = useState(false)
+    const [downloadError, setDownloadError] = useState<string | null>(null)
+
     const meta = artifact.data?.metadata ?? {}
+    const content = artifact.data?.content
+    const contentType = artifact.data?.content_type
+    const binary = isBinaryContent(content)
+    const dataframe = isDataFrameContent(content)
+    const previewable = content !== undefined && content !== null && !binary
+
     const downloadUrl = `${baseUrl}/api/${servicePath(
         serviceId,
         `api/v1/artifacts/${artifact.id}/$download`
     )}`
+
+    const handleDownload = async () => {
+        setDownloading(true)
+        setDownloadError(null)
+        try {
+            await downloadFile(
+                downloadUrl,
+                `artifact_${artifact.id}.${fileExtension(contentType)}`
+            )
+        } catch (error) {
+            setDownloadError(
+                error instanceof Error ? error.message : String(error)
+            )
+        } finally {
+            setDownloading(false)
+        }
+    }
 
     return (
         <div className={classes.detailStack}>
@@ -83,8 +146,10 @@ const ArtifactDetail: FC<{ serviceId: string; artifact: Artifact }> = ({
                     </DetailRow>
                 )}
                 <DetailRow label={i18n.t('Content')}>
-                    {artifact.data?.content_type ?? i18n.t('unknown')} ·{' '}
-                    {formatBytes(artifact.data?.content_size)}
+                    {contentType ?? i18n.t('unknown')}
+                    {dataframe
+                        ? ` · ${(content as DataFrameContent).data.length} rows x ${(content as DataFrameContent).columns.length} columns`
+                        : ` · ${formatBytes(artifact.data?.content_size)}`}
                 </DetailRow>
                 {artifact.tags.length > 0 && (
                     <DetailRow label={i18n.t('Tags')}>
@@ -96,13 +161,31 @@ const ArtifactDetail: FC<{ serviceId: string; artifact: Artifact }> = ({
                     </DetailRow>
                 )}
                 <DetailRow label={i18n.t('Download')}>
-                    <a href={downloadUrl} target="_blank" rel="noreferrer">
-                        {i18n.t('Download artifact ({{size}})', {
-                            size: formatBytes(artifact.data?.content_size),
-                        })}
-                    </a>
+                    <span className={classes.download}>
+                        <Button
+                            small
+                            secondary
+                            loading={downloading}
+                            onClick={handleDownload}
+                        >
+                            {downloading
+                                ? i18n.t('Downloading…')
+                                : i18n.t('Download file')}
+                        </Button>
+                        {downloadError && (
+                            <span className={classes.error}>
+                                {downloadError}
+                            </span>
+                        )}
+                    </span>
                 </DetailRow>
             </DetailPanel>
+
+            {previewable && (
+                <DetailPanel title={i18n.t('Data')}>
+                    <ContentPreview content={content} />
+                </DetailPanel>
+            )}
 
             {meta.stdout ? (
                 <DetailPanel title={i18n.t('Standard output')}>

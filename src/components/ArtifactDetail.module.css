@@ -10,3 +10,16 @@
     flex-wrap: wrap;
     gap: 6px;
 }
+
+.download {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.error {
+    font-size: 12px;
+    color: var(--colors-red600);
+}

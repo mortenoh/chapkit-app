@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-06-14T08:50:26.264Z\n"
-"PO-Revision-Date: 2026-06-14T08:50:26.265Z\n"
+"POT-Creation-Date: 2026-06-14T09:51:12.343Z\n"
+"PO-Revision-Date: 2026-06-14T09:51:12.348Z\n"
 
 msgid "CHAP"
 msgstr "CHAP"
@@ -83,8 +83,14 @@ msgstr "Tags"
 msgid "Download"
 msgstr "Download"
 
-msgid "Download artifact ({{size}})"
-msgstr "Download artifact ({{size}})"
+msgid "Downloading…"
+msgstr "Downloading…"
+
+msgid "Download file"
+msgstr "Download file"
+
+msgid "Data"
+msgstr "Data"
 
 msgid "Standard output"
 msgstr "Standard output"
@@ -136,6 +142,12 @@ msgstr ""
 
 msgid "Details"
 msgstr "Details"
+
+msgid " (showing first {{r}} rows, {{c}} columns)"
+msgstr " (showing first {{r}} rows, {{c}} columns)"
+
+msgid "{{rows}} rows x {{cols}} columns"
+msgstr "{{rows}} rows x {{cols}} columns"
 
 msgid "Edit"
 msgstr "Edit"

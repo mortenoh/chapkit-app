@@ -82,8 +82,39 @@ export interface ArtifactMetadata {
 export interface ArtifactData {
     type?: string
     metadata?: ArtifactMetadata
+    // Inline payload. For dataframe artifacts this is { columns, data }; for
+    // binary artifacts it is a non-serializable bytes placeholder.
+    content?: unknown
     content_type?: string | null
     content_size?: number | null
+}
+
+/** A chapkit dataframe payload (pandas split orientation). */
+export interface DataFrameContent {
+    columns: string[]
+    data: unknown[][]
+}
+
+/** True for the bytes placeholder chapkit emits for binary artifacts. */
+export function isBinaryContent(content: unknown): boolean {
+    return (
+        typeof content === 'object' &&
+        content !== null &&
+        ('_serialization_error' in content ||
+            (content as { _type?: string })._type === 'bytes')
+    )
+}
+
+/** True when the content is a previewable dataframe. */
+export function isDataFrameContent(
+    content: unknown
+): content is DataFrameContent {
+    return (
+        typeof content === 'object' &&
+        content !== null &&
+        Array.isArray((content as DataFrameContent).columns) &&
+        Array.isArray((content as DataFrameContent).data)
+    )
 }
 
 export interface Artifact {
