@@ -1,4 +1,66 @@
-.stack {
+.layout {
+    display: flex;
+    height: 100%;
+    min-height: 0;
+    border: 1px solid var(--colors-grey300);
+    border-radius: 6px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.list {
+    width: 320px;
+    flex-shrink: 0;
+    overflow: auto;
+    border-inline-end: 1px solid var(--colors-grey300);
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 10px 12px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--colors-grey200);
+}
+
+.item:hover {
+    background: var(--colors-grey100);
+}
+
+.itemSelected,
+.itemSelected:hover {
+    background: var(--colors-blue050);
+    box-shadow: inset 3px 0 0 0 var(--colors-blue600);
+}
+
+.itemMeta {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2px;
+}
+
+.itemWhen {
+    font-size: 12px;
+    color: var(--colors-grey700);
+}
+
+.itemDur {
+    font-size: 12px;
+    color: var(--colors-grey500);
+}
+
+.detail {
+    flex: 1;
+    min-width: 0;
+    overflow: auto;
+    padding: 16px;
+    background: var(--colors-grey100);
+}
+
+.detailStack {
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -21,4 +83,8 @@
 
 .traceback {
     margin-top: 12px;
+}
+
+.muted {
+    color: var(--colors-grey600);
 }

@@ -1,31 +1,13 @@
-import { useConfig } from '@dhis2/app-runtime'
 import i18n from '@dhis2/d2-i18n'
-import { Button, IconChevronDown16, IconChevronRight16, Tag } from '@dhis2/ui'
+import { Button, IconChevronDown16, IconChevronRight16 } from '@dhis2/ui'
 import React, { FC, useEffect, useMemo, useRef, useState } from 'react'
-import { useParams } from 'react-router'
+import { useParams, useSearchParams } from 'react-router'
 import classes from './ArtifactsPage.module.css'
-import CodeBlock from '@/components/CodeBlock'
-import { DetailPanel, DetailRow } from '@/components/Detail'
+import ArtifactDetail, { typeLabel } from '@/components/ArtifactDetail'
 import { Page, PageBody, PageHeader } from '@/components/Page'
 import { Empty, ErrorView, Loading } from '@/components/StateViews'
 import { RunStatusBadge } from '@/components/Status'
 import { Artifact, servicePath, useChapQuery } from '@/lib/chap'
-import {
-    formatBytes,
-    formatDateTime,
-    formatDuration,
-    relativeTime,
-} from '@/lib/format'
-
-function typeLabel(type?: string): string {
-    if (type === 'ml_training_workspace') {
-        return i18n.t('Training workspace')
-    }
-    if (type === 'ml_prediction') {
-        return i18n.t('Prediction')
-    }
-    return type ?? i18n.t('Artifact')
-}
 
 const TreeNode: FC<{
     node: Artifact
@@ -97,100 +79,10 @@ const TreeNode: FC<{
     )
 }
 
-const ArtifactDetail: FC<{ serviceId: string; artifact: Artifact }> = ({
-    serviceId,
-    artifact,
-}) => {
-    const { baseUrl } = useConfig()
-    const meta = artifact.data?.metadata ?? {}
-    const downloadUrl = `${baseUrl}/api/${servicePath(
-        serviceId,
-        `api/v1/artifacts/${artifact.id}/$download`
-    )}`
-
-    return (
-        <div className={classes.detailStack}>
-            <DetailPanel title={typeLabel(artifact.data?.type)}>
-                <DetailRow label={i18n.t('ID')}>{artifact.id}</DetailRow>
-                <DetailRow label={i18n.t('Level')}>
-                    {artifact.level}
-                    {artifact.level_label ? ` · ${artifact.level_label}` : ''}
-                </DetailRow>
-                {artifact.hierarchy && (
-                    <DetailRow label={i18n.t('Hierarchy')}>
-                        {artifact.hierarchy}
-                    </DetailRow>
-                )}
-                {meta.status && (
-                    <DetailRow label={i18n.t('Status')}>
-                        <RunStatusBadge status={meta.status} />
-                    </DetailRow>
-                )}
-                {meta.config_id && (
-                    <DetailRow label={i18n.t('Config')}>
-                        {meta.config_id}
-                    </DetailRow>
-                )}
-                <DetailRow label={i18n.t('Created')}>
-                    {formatDateTime(artifact.created_at)} (
-                    {relativeTime(artifact.created_at)})
-                </DetailRow>
-                {meta.started_at && (
-                    <DetailRow label={i18n.t('Started')}>
-                        {formatDateTime(meta.started_at)}
-                    </DetailRow>
-                )}
-                {meta.completed_at && (
-                    <DetailRow label={i18n.t('Completed')}>
-                        {formatDateTime(meta.completed_at)}
-                    </DetailRow>
-                )}
-                <DetailRow label={i18n.t('Duration')}>
-                    {formatDuration(meta.duration_seconds)}
-                </DetailRow>
-                {meta.exit_code !== null && meta.exit_code !== undefined && (
-                    <DetailRow label={i18n.t('Exit code')}>
-                        {meta.exit_code}
-                    </DetailRow>
-                )}
-                <DetailRow label={i18n.t('Content')}>
-                    {artifact.data?.content_type ?? i18n.t('unknown')} ·{' '}
-                    {formatBytes(artifact.data?.content_size)}
-                </DetailRow>
-                {artifact.tags.length > 0 && (
-                    <DetailRow label={i18n.t('Tags')}>
-                        <div className={classes.tags}>
-                            {artifact.tags.map((t) => (
-                                <Tag key={t}>{t}</Tag>
-                            ))}
-                        </div>
-                    </DetailRow>
-                )}
-                <DetailRow label={i18n.t('Download')}>
-                    <a href={downloadUrl} target="_blank" rel="noreferrer">
-                        {i18n.t('Download artifact ({{size}})', {
-                            size: formatBytes(artifact.data?.content_size),
-                        })}
-                    </a>
-                </DetailRow>
-            </DetailPanel>
-
-            {meta.stdout ? (
-                <DetailPanel title={i18n.t('Standard output')}>
-                    <CodeBlock>{meta.stdout}</CodeBlock>
-                </DetailPanel>
-            ) : null}
-            {meta.stderr ? (
-                <DetailPanel title={i18n.t('Standard error')}>
-                    <CodeBlock>{meta.stderr}</CodeBlock>
-                </DetailPanel>
-            ) : null}
-        </div>
-    )
-}
-
 const ArtifactsPage: FC = () => {
     const { id = '' } = useParams()
+    const [searchParams] = useSearchParams()
+    const wantedId = searchParams.get('artifact')
     const artifacts = useChapQuery<Artifact[]>(
         servicePath(id, 'api/v1/artifacts')
     )
@@ -199,27 +91,52 @@ const ArtifactsPage: FC = () => {
     const [expanded, setExpanded] = useState<Set<string>>(new Set())
     const initialized = useRef(false)
 
-    const { childrenByParent, roots, list } = useMemo(() => {
+    const { childrenByParent, byId, roots, list } = useMemo(() => {
         const items = artifacts.data ?? []
         const byParent = new Map<string | null, Artifact[]>()
+        const index = new Map<string, Artifact>()
         items.forEach((item) => {
-            const key = item.parent_id
-            byParent.set(key, [...(byParent.get(key) ?? []), item])
+            byParent.set(item.parent_id, [
+                ...(byParent.get(item.parent_id) ?? []),
+                item,
+            ])
+            index.set(item.id, item)
         })
         return {
             childrenByParent: byParent,
+            byId: index,
             roots: byParent.get(null) ?? [],
             list: items,
         }
     }, [artifacts.data])
 
+    // Select the ?artifact= target when present, else the first artifact once.
     useEffect(() => {
-        if (!initialized.current && list.length > 0) {
-            initialized.current = true
-            setSelectedId(list[0].id)
-            setExpanded(new Set(roots.map((r) => r.id)))
+        if (list.length === 0) {
+            return
         }
-    }, [list, roots])
+        let target: string | null = null
+        if (wantedId && byId.has(wantedId)) {
+            target = wantedId
+        } else if (!initialized.current) {
+            target = list[0].id
+        }
+        if (!target) {
+            return
+        }
+        initialized.current = true
+        setSelectedId(target)
+        setExpanded((prev) => {
+            const next = new Set(prev)
+            roots.forEach((r) => next.add(r.id))
+            let cursor = byId.get(target)
+            while (cursor?.parent_id) {
+                next.add(cursor.parent_id)
+                cursor = byId.get(cursor.parent_id)
+            }
+            return next
+        })
+    }, [list, roots, byId, wantedId])
 
     const toggle = (nodeId: string) =>
         setExpanded((prev) => {

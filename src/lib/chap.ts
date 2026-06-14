@@ -1,4 +1,4 @@
-import { useDataEngine } from '@dhis2/app-runtime'
+import { useConfig, useDataEngine } from '@dhis2/app-runtime'
 import { useCallback, useEffect, useState } from 'react'
 
 /**
@@ -217,4 +217,63 @@ export function useChapQuery<T>(
     }, [resource, paramsKey, nonce, engine])
 
     return { data, loading, error, refetch }
+}
+
+/**
+ * Read a job's result-artifact id. A completed job links to the artifact it
+ * produced, but only the job's `$stream` (server-sent events) carries that
+ * `artifact_id` — the list/detail endpoints omit it. We read just the first
+ * stream event and stop. `statusKey` (the job's status) re-runs it once the job
+ * finishes. Returns null while running or if the job produced no artifact.
+ */
+export function useJobArtifactId(
+    serviceId: string,
+    jobId: string | null,
+    statusKey?: string
+): { artifactId: string | null | undefined; loading: boolean } {
+    const { baseUrl } = useConfig()
+    const [artifactId, setArtifactId] = useState<string | null | undefined>(
+        undefined
+    )
+    const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        if (!jobId) {
+            setArtifactId(undefined)
+            return
+        }
+        let cancelled = false
+        const controller = new AbortController()
+        setLoading(true)
+        const url = `${baseUrl}/api/${servicePath(serviceId, `api/v1/jobs/${jobId}/$stream`)}`
+        fetch(url, { credentials: 'include', signal: controller.signal })
+            .then(async (res) => {
+                const reader = res.body?.getReader()
+                if (!reader) {
+                    throw new Error('No stream body')
+                }
+                const { value } = await reader.read()
+                reader.cancel()
+                const match = new TextDecoder()
+                    .decode(value)
+                    .match(/data: (\{.*\})/)
+                const record = match ? JSON.parse(match[1]) : {}
+                if (!cancelled) {
+                    setArtifactId(record.artifact_id ?? null)
+                    setLoading(false)
+                }
+            })
+            .catch(() => {
+                if (!cancelled) {
+                    setArtifactId(null)
+                    setLoading(false)
+                }
+            })
+        return () => {
+            cancelled = true
+            controller.abort()
+        }
+    }, [serviceId, jobId, statusKey, baseUrl])
+
+    return { artifactId, loading }
 }

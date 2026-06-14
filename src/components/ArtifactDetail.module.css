@@ -1,0 +1,11 @@
+.detailStack {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
