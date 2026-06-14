@@ -149,7 +149,11 @@ const ArtifactsPage: FC = () => {
             return next
         })
 
-    const selected = list.find((a) => a.id === selectedId)
+    // The list is content-less; fetch the selected artifact in full (with its
+    // content) on demand for the detail pane and data preview.
+    const selectedArtifact = useChapQuery<Artifact>(
+        selectedId ? servicePath(id, `api/v1/artifacts/${selectedId}`) : null
+    )
 
     return (
         <Page>
@@ -195,17 +199,24 @@ const ArtifactsPage: FC = () => {
                             ))}
                         </div>
                         <div className={classes.detail}>
-                            {selected ? (
-                                <ArtifactDetail
-                                    serviceId={id}
-                                    artifact={selected}
-                                />
-                            ) : (
+                            {!selectedId ? (
                                 <Empty>
                                     {i18n.t(
                                         'Select an artifact to inspect it.'
                                     )}
                                 </Empty>
+                            ) : selectedArtifact.error ? (
+                                <ErrorView
+                                    error={selectedArtifact.error}
+                                    onRetry={selectedArtifact.refetch}
+                                />
+                            ) : selectedArtifact.data ? (
+                                <ArtifactDetail
+                                    serviceId={id}
+                                    artifact={selectedArtifact.data}
+                                />
+                            ) : (
+                                <Loading />
                             )}
                         </div>
                     </div>
