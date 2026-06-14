@@ -1,0 +1,56 @@
+name: Build app bundle
+
+# Builds the installable DHIS2 app zip (pnpm build -> build/bundle/*.zip).
+# Every push/PR uploads it as a downloadable workflow artifact; pushing a
+# version tag (v*) also attaches it to a GitHub Release so it can be installed
+# on any DHIS2 instance via App Management -> Install from file.
+
+on:
+    push:
+        branches: [main]
+        tags: ['v*']
+    pull_request:
+        branches: [main]
+    workflow_dispatch:
+
+permissions:
+    contents: write
+
+concurrency:
+    group: build-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+
+            - name: Set up pnpm
+              uses: pnpm/action-setup@v4
+
+            - name: Set up Node
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+                  cache: pnpm
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Build app bundle
+              run: pnpm build
+
+            - name: Upload bundle artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: chapkit-app-bundle
+                  path: build/bundle/*.zip
+                  if-no-files-found: error
+
+            - name: Attach bundle to release
+              if: startsWith(github.ref, 'refs/tags/')
+              uses: softprops/action-gh-release@v2
+              with:
+                  files: build/bundle/*.zip

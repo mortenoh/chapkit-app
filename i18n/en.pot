@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2026-06-13T19:55:00.837Z\n"
-"PO-Revision-Date: 2026-06-13T19:55:00.837Z\n"
+"POT-Creation-Date: 2026-06-14T08:50:26.264Z\n"
+"PO-Revision-Date: 2026-06-14T08:50:26.265Z\n"
 
 msgid "CHAP"
 msgstr "CHAP"
@@ -31,6 +31,66 @@ msgstr "Configurations"
 
 msgid "System"
 msgstr "System"
+
+msgid "Training workspace"
+msgstr "Training workspace"
+
+msgid "Prediction"
+msgstr "Prediction"
+
+msgid "Artifact"
+msgstr "Artifact"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Level"
+msgstr "Level"
+
+msgid "Hierarchy"
+msgstr "Hierarchy"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Config"
+msgstr "Config"
+
+msgid "Created"
+msgstr "Created"
+
+msgid "Started"
+msgstr "Started"
+
+msgid "Completed"
+msgstr "Completed"
+
+msgid "Duration"
+msgstr "Duration"
+
+msgid "Exit code"
+msgstr "Exit code"
+
+msgid "Content"
+msgstr "Content"
+
+msgid "unknown"
+msgstr "unknown"
+
+msgid "Tags"
+msgstr "Tags"
+
+msgid "Download"
+msgstr "Download"
+
+msgid "Download artifact ({{size}})"
+msgstr "Download artifact ({{size}})"
+
+msgid "Standard output"
+msgstr "Standard output"
+
+msgid "Standard error"
+msgstr "Standard error"
 
 msgid "Retry connection"
 msgstr "Retry connection"
@@ -104,65 +164,39 @@ msgstr "Something went wrong"
 msgid "Retry"
 msgstr "Retry"
 
-msgid "Training workspace"
-msgstr "Training workspace"
+msgid "Production"
+msgstr "Production"
 
-msgid "Prediction"
-msgstr "Prediction"
+msgid "Approved for general use."
+msgstr "Approved for general use."
 
-msgid "Artifact"
-msgstr "Artifact"
+msgid "Testing"
+msgstr "Testing"
 
-msgid "ID"
-msgstr "ID"
+msgid "Prepared for more extensive testing; not yet approved for production."
+msgstr "Prepared for more extensive testing; not yet approved for production."
 
-msgid "Level"
-msgstr "Level"
+msgid "Limited"
+msgstr "Limited"
 
-msgid "Hierarchy"
-msgstr "Hierarchy"
+msgid "Tested on a small dataset. Requires manual tuning and close monitoring."
+msgstr "Tested on a small dataset. Requires manual tuning and close monitoring."
 
-msgid "Status"
-msgstr "Status"
+msgid "Experimental"
+msgstr "Experimental"
 
-msgid "Config"
-msgstr "Config"
+msgid ""
+"An early prototype with no formal validation - only for initial "
+"experimentation."
+msgstr ""
+"An early prototype with no formal validation - only for initial "
+"experimentation."
 
-msgid "Created"
-msgstr "Created"
+msgid "Deprecated"
+msgstr "Deprecated"
 
-msgid "Started"
-msgstr "Started"
-
-msgid "Completed"
-msgstr "Completed"
-
-msgid "Duration"
-msgstr "Duration"
-
-msgid "Exit code"
-msgstr "Exit code"
-
-msgid "Content"
-msgstr "Content"
-
-msgid "unknown"
-msgstr "unknown"
-
-msgid "Tags"
-msgstr "Tags"
-
-msgid "Download"
-msgstr "Download"
-
-msgid "Download artifact ({{size}})"
-msgstr "Download artifact ({{size}})"
-
-msgid "Standard output"
-msgstr "Standard output"
-
-msgid "Standard error"
-msgstr "Standard error"
+msgid "This model is not intended for use or has been deprecated."
+msgstr "This model is not intended for use or has been deprecated."
 
 msgid "Refresh"
 msgstr "Refresh"
@@ -194,11 +228,8 @@ msgstr "No configurations stored on this service."
 msgid "Select a configuration."
 msgstr "Select a configuration."
 
-msgid " · auto-refreshing"
-msgstr " · auto-refreshing"
-
-msgid "No jobs have been submitted yet."
-msgstr "No jobs have been submitted yet."
+msgid "Job"
+msgstr "Job"
 
 msgid "Submitted"
 msgstr "Submitted"
@@ -206,11 +237,29 @@ msgstr "Submitted"
 msgid "Finished"
 msgstr "Finished"
 
-msgid "Job"
-msgstr "Job"
+msgid "Result artifact"
+msgstr "Result artifact"
+
+msgid "Resolving…"
+msgstr "Resolving…"
+
+msgid "Open in Artifacts"
+msgstr "Open in Artifacts"
+
+msgid "none"
+msgstr "none"
 
 msgid "Error"
 msgstr "Error"
+
+msgid " · auto-refreshing"
+msgstr " · auto-refreshing"
+
+msgid "No jobs have been submitted yet."
+msgstr "No jobs have been submitted yet."
+
+msgid "Select a job to see details."
+msgstr "Select a job to see details."
 
 msgid "Service not found"
 msgstr "Service not found"
@@ -262,9 +311,6 @@ msgstr "Prediction periods"
 
 msgid "Required covariates"
 msgstr "Required covariates"
-
-msgid "none"
-msgstr "none"
 
 msgid "Extra covariates allowed"
 msgstr "Extra covariates allowed"
@@ -334,3 +380,13 @@ msgstr "Bundled apps"
 
 msgid "No bundled apps"
 msgstr "No bundled apps"
+
+msgctxt "Application title"
+msgid "__MANIFEST_APP_TITLE"
+msgstr "Chapkit Browser"
+
+msgctxt "Application description"
+msgid "__MANIFEST_APP_DESCRIPTION"
+msgstr ""
+"Read-only DHIS2 explorer for CHAP model services (chapkit) via the "
+"chap-core route"
