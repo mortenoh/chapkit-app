@@ -102,6 +102,7 @@ const ServiceOverviewPage: FC = () => {
                             <Row label={i18n.t('Assessed status')}>
                                 <AssessedStatusBadge
                                     status={meta.author_assessed_status}
+                                    verbose
                                 />
                             </Row>
                         )}

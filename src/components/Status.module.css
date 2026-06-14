@@ -17,3 +17,8 @@
 .muted {
     color: var(--colors-grey600);
 }
+
+.assessedDescription {
+    font-size: 13px;
+    color: var(--colors-grey700);
+}

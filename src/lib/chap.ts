@@ -22,7 +22,7 @@ export const servicePath = (serviceId: string, apiPath: string): string =>
 
 // --- chap-core v2 service registry ----------------------------------------
 
-export type AssessedStatus = 'green' | 'yellow' | 'orange' | 'red'
+export type AssessedStatus = 'gray' | 'red' | 'orange' | 'yellow' | 'green'
 
 export interface ModelMetadata {
     author?: string | null
