@@ -7,7 +7,9 @@
     display: grid;
     grid-template-columns: 240px 1fr;
     width: 100%;
-    height: calc(100vh - 48px); /* viewport minus the header bar */
+    /* The app renders inside the DHIS2 shell iframe, which is already sized
+       below the header bar, so the full iframe viewport is ours to use. */
+    height: 100vh;
     overflow: hidden;
     font-size: 14px;
 }
