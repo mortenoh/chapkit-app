@@ -3,3 +3,12 @@ node_modules
 .d2
 src/locales
 build
+
+# Docs
+site
+
+# Local screenshot scratch (DHIS2 + modeling-app captures; chapkit-app shots live under docs/)
+screenshots
+
+# Playwright MCP artifacts
+.playwright-mcp

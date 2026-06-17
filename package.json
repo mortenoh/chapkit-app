@@ -1,6 +1,6 @@
 {
     "name": "chapkit-app",
-    "version": "1.1.1",
+    "version": "1.2.0",
     "description": "Read-only DHIS2 explorer for CHAP model services (chapkit) via the chap-core route",
     "license": "BSD-3-Clause",
     "private": true,
