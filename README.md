@@ -1,45 +1,57 @@
-This project was bootstrapped with [DHIS2 Application Platform](https://github.com/dhis2/app-platform).
+# Chapkit Browser
 
-## Available Scripts
+Read-only DHIS2 explorer for CHAP model services ([chapkit](https://github.com/dhis2-chap/chapkit)) via the chap-core route.
 
-In the project directory, you can run:
+It lets a DHIS2 operator inspect the model services registered with chap-core - their model metadata, configurations, jobs, and produced artifacts (including inline dataframe previews) - without leaving DHIS2. It is read-only: it surfaces what chap-core knows, it does not start runs or change anything.
 
-### `yarn start`
+Documentation (with screenshots of every screen): **https://mortenoh.github.io/chapkit-app/**
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## How it connects
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+The app never talks to chap-core directly. It goes through a DHIS2 [Route](https://docs.dhis2.org/en/develop/using-the-api/dhis-core-version-master/route.html) with code `chap`, which reverse-proxies to chap-core, which in turn proxies to each chapkit service:
 
-### `yarn test`
+```
+DHIS2  /api/routes/chap/run/v2  ->  chap-core /v2  ->  chapkit /api/v1
+```
 
-Launches the test runner and runs all available tests found in `/src`.<br />
+If the route is missing or chap-core is unreachable, the app shows a setup screen explaining what to fix.
 
-See the section about [running tests](https://platform.dhis2.nu/#/scripts/test) for more information.
+## Prerequisites
 
-### `yarn build`
+- A running DHIS2 instance (2.40+) where you have the App Management authority.
+- A reachable chap-core with at least one chapkit model service registered.
+- A DHIS2 wildcard route with code `chap` pointing at your chap-core, for example:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+  ```json
+  { "name": "chap", "code": "chap", "url": "http://chap:8000/**" }
+  ```
 
-The build is minified and the filenames include the hashes.<br />
-A deployable `.zip` file can be found in `build/bundle`!
+## Development
 
-See the section about [building](https://platform.dhis2.nu/#/scripts/build) for more information.
+This project uses [pnpm](https://pnpm.io/) and the [DHIS2 Application Platform](https://platform.dhis2.nu/).
 
-### `yarn deploy`
+```bash
+pnpm install
+pnpm start --proxy http://localhost:8080   # point at your DHIS2 instance
+```
 
-Deploys the built app in the `build` folder to a running DHIS2 instance.<br />
-This command will prompt you to enter a server URL as well as the username and password of a DHIS2 user with the App Management authority.<br/>
-You must run `yarn build` before running `yarn deploy`.<br />
+The app is served at http://localhost:3000. Log in with your DHIS2 credentials.
 
-See the section about [deploying](https://platform.dhis2.nu/#/scripts/deploy) for more information.
+Other scripts:
 
-## Learn More
+- `pnpm build` - build the installable app bundle into `build/bundle/*.zip`.
+- `pnpm test` - run the test suite.
+- `pnpm lint` / `pnpm format` - lint and format.
 
-You can learn more about the platform in the [DHIS2 Application Platform Documentation](https://platform.dhis2.nu/).
+## Installing into DHIS2
 
-You can learn more about the runtime in the [DHIS2 Application Runtime Documentation](https://runtime.dhis2.nu/).
+Download the latest `chapkit-app-<version>.zip` from the [Releases](https://github.com/mortenoh/chapkit-app/releases) page (built and attached automatically on every `v*` tag), then in DHIS2 go to **App Management -> Install from file** and upload it. You can also build the zip yourself with `pnpm build` and `pnpm deploy` to a running instance.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Documentation
+
+The docs are built with MkDocs Material and deployed to GitHub Pages on every change to `docs/`:
+
+```bash
+pip install -r docs/requirements.txt
+mkdocs serve   # preview at http://localhost:8000
+```
